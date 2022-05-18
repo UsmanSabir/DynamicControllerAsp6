@@ -12,6 +12,8 @@
 
   <ItemGroup>
     <Folder Include="CustomServices\" />
+    <Folder Include="Core\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

@@ -1,16 +1,31 @@
+using System.Reflection;
+using DynamicControllerPOC.Controllers;
 using DynamicControllerPOC.CustomServices;
+using DynamicControllerPOC.Services;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Add services to the container.
 var feature = new ControllerFeature();
-builder.Services.AddControllers().PartManager.PopulateFeature(feature);
-foreach (var featureController in feature.Controllers)
-{
-    builder.Services.TryAddTransient(featureController.AsType());
-}
+var closedControllerTypes=new List<TypeInfo>();
+closedControllerTypes.Add(typeof(BizService).GetTypeInfo());
+
+builder.Services.AddControllers()
+    .ConfigureApplicationPartManager(
+        manager =>
+        {
+            manager.FeatureProviders.Add(new MyControllerFeatureProvider());
+            manager.ApplicationParts.Add(new GenericControllerApplicationPart(closedControllerTypes));
+        });
+    
+    //.PartManager.PopulateFeature(feature);
+//foreach (var featureController in feature.Controllers)
+//{
+//    builder.Services.TryAddTransient(featureController.AsType());
+//}
 
 builder.Services.AddSingleton<IControllerActivator, MyControllerActivator>();
 builder.Services.Replace(ServiceDescriptor.Transient<IControllerActivator, MyControllerActivator>());
