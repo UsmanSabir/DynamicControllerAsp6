@@ -10,13 +10,13 @@ namespace DynamicControllerPOC.Core
     [Route("api/[controller]")]
     [ApiController]
     [BusinessControllerNameConvention]
-    public class BaseApiController<T> : ControllerBase where T:IBusinessService
+    public class BusinessServiceHostController<T> : ControllerBase where T:IBusinessService
     {
         private T _instance;
 
 
-        // POST api/<BaseApiController>
-        public BaseApiController(T instance)
+        // POST api/<BusinessServiceHostController>
+        public BusinessServiceHostController(T instance)
         {
             _instance = instance;
         }

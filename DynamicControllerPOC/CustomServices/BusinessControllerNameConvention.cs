@@ -9,12 +9,12 @@ public class BusinessControllerNameConvention : Attribute, IControllerModelConve
     public void Apply(ControllerModel controller)
     {
         if (controller.ControllerType.GetGenericTypeDefinition() !=
-            typeof(BaseApiController<>))
+            typeof(BusinessServiceHostController<>))
         {
             return;
         }
 
         var entityType = controller.ControllerType.GenericTypeArguments[0];
-        controller.ControllerName = $"{entityType.Name}Controller";
+        controller.ControllerName = $"{entityType.Name}Host";
     }
 }

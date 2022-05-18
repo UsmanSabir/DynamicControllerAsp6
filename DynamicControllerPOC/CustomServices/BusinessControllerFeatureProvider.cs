@@ -19,7 +19,7 @@ public class BusinessControllerFeatureProvider : IApplicationFeatureProvider<Con
             if (!feature.Controllers.Any(t => t.Name == typeName))
             {
                 // There's no 'real' controller for this entity, so add the generic version.
-                var controllerType = typeof(BaseApiController<>)
+                var controllerType = typeof(BusinessServiceHostController<>)
                     .MakeGenericType(entityType).GetTypeInfo();
                 feature.Controllers.Add(controllerType);
             }
