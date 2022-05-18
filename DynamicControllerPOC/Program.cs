@@ -22,7 +22,7 @@ builder.Services.RegisterBusinessServices();
 //            //manager.FeatureProviders.Add(new MyControllerFeatureProvider());
 //            //manager.ApplicationParts.Add(new GenericControllerApplicationPart(closedControllerTypes));
 
-//            manager.FeatureProviders.Add(new GenericControllerFeatureProvider());
+//            manager.FeatureProviders.Add(new BusinessControllerFeatureProvider());
 //        });
 
 //.PartManager.PopulateFeature(feature);

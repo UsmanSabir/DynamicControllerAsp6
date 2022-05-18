@@ -9,7 +9,7 @@ namespace DynamicControllerPOC.Core
 {
     [Route("api/[controller]")]
     [ApiController]
-    [GenericControllerNameConvention]
+    [BusinessControllerNameConvention]
     public class BaseApiController<T> : ControllerBase where T:IBusinessService
     {
         private T _instance;

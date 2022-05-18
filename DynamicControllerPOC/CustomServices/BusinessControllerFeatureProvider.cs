@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 
 namespace DynamicControllerPOC.CustomServices;
 
-public class GenericControllerFeatureProvider : IApplicationFeatureProvider<ControllerFeature>
+public class BusinessControllerFeatureProvider : IApplicationFeatureProvider<ControllerFeature>
 {
     public void PopulateFeature(IEnumerable<ApplicationPart> parts, ControllerFeature feature)
     {
