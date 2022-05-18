@@ -2,5 +2,5 @@
 
 public interface IBusinessService
 {
-    ResponseModel Execute(RequestModel input);
+    string Execute();//int input
 }

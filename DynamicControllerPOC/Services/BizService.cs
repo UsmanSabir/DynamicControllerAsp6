@@ -4,12 +4,8 @@ namespace DynamicControllerPOC.Services;
 
 public class BizService : IBusinessService
 {
-    public ResponseModel Execute(RequestModel input)
+    public string Execute()
     {
-        return new ResponseModel()
-        {
-            IsSuccess = true,
-            Result = "Resp:" + input.Request
-        };
+        return $"Resp: 5";
     }
 }

@@ -9,26 +9,30 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 // Add services to the container.
-var feature = new ControllerFeature();
-var closedControllerTypes=new List<TypeInfo>();
-closedControllerTypes.Add(typeof(BizService).GetTypeInfo());
+builder.Services.RegisterBusinessServices();
 
-builder.Services.AddControllers()
-    .ConfigureApplicationPartManager(
-        manager =>
-        {
-            manager.FeatureProviders.Add(new MyControllerFeatureProvider());
-            manager.ApplicationParts.Add(new GenericControllerApplicationPart(closedControllerTypes));
-        });
-    
-    //.PartManager.PopulateFeature(feature);
+//var feature = new ControllerFeature();
+//var closedControllerTypes = new List<TypeInfo>();
+//closedControllerTypes.Add(typeof(BizService).GetTypeInfo());
+
+//builder.Services.AddControllers()
+//    .ConfigureApplicationPartManager(
+//        manager =>
+//        {
+//            //manager.FeatureProviders.Add(new MyControllerFeatureProvider());
+//            //manager.ApplicationParts.Add(new GenericControllerApplicationPart(closedControllerTypes));
+
+//            manager.FeatureProviders.Add(new GenericControllerFeatureProvider());
+//        });
+
+//.PartManager.PopulateFeature(feature);
 //foreach (var featureController in feature.Controllers)
 //{
 //    builder.Services.TryAddTransient(featureController.AsType());
 //}
 
-builder.Services.AddSingleton<IControllerActivator, MyControllerActivator>();
-builder.Services.Replace(ServiceDescriptor.Transient<IControllerActivator, MyControllerActivator>());
+//builder.Services.AddSingleton<IControllerActivator, MyControllerActivator>();
+//builder.Services.Replace(ServiceDescriptor.Transient<IControllerActivator, MyControllerActivator>());
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
