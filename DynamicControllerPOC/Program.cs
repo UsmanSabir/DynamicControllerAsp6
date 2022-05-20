@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Web.Http.Description;
 using DynamicControllerPOC.Controllers;
 using DynamicControllerPOC.CustomServices;
 using DynamicControllerPOC.Services;
@@ -36,6 +37,8 @@ builder.Services.RegisterBusinessServices();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddSingleton<IApiExplorer, BizApiExplorer>();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();

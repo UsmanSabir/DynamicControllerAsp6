@@ -16,5 +16,7 @@ public class BusinessControllerNameConvention : Attribute, IControllerModelConve
 
         var entityType = controller.ControllerType.GenericTypeArguments[0];
         controller.ControllerName = $"{entityType.Name}Host";
+
+        controller.ApiExplorer.IsVisible = true;
     }
 }

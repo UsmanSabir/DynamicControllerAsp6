@@ -1,4 +1,6 @@
-﻿using DynamicControllerPOC.Core;
+﻿using System.Web.Http.Description;
+using DynamicControllerPOC.Core;
+using Microsoft.AspNetCore.Mvc.Abstractions;
 
 namespace DynamicControllerPOC.CustomServices;
 
@@ -11,13 +13,19 @@ public static class ServiceExtensions
         {
             services.AddScoped(businessService);
         }
-        return services.AddControllers()
-            .ConfigureApplicationPartManager(
+        services.AddSingleton<IApiExplorer, BizApiExplorer>();
+        //services.AddSingleton<IActionDescriptorProvider, DynamicActionProvider>();
+
+        return services.AddControllers(opt =>
+            {
+                opt.Conventions.Add(new ApplicationModelConvention());
+            })
+    .ConfigureApplicationPartManager(
                 manager =>
                 {
                     //manager.FeatureProviders.Add(new MyControllerFeatureProvider());
                     //manager.ApplicationParts.Add(new GenericControllerApplicationPart(closedControllerTypes));
-
+                    
                     manager.FeatureProviders.Add(new BusinessControllerFeatureProvider());
                 });
     }
