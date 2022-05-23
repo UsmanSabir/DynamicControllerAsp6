@@ -2,7 +2,7 @@
 
 namespace DynamicControllerPOC.Services;
 
-public class BizService : IBusinessService
+public class BizService : IContractService
 {
     public string Execute()
     {

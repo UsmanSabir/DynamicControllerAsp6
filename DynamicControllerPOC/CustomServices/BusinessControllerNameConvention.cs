@@ -1,4 +1,5 @@
-﻿using DynamicControllerPOC.Core;
+﻿using System.Diagnostics;
+using DynamicControllerPOC.Core;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
 namespace DynamicControllerPOC.CustomServices;
@@ -15,6 +16,12 @@ public class BusinessControllerNameConvention : Attribute, IControllerModelConve
         }
 
         var entityType = controller.ControllerType.GenericTypeArguments[0];
-        controller.ControllerName = $"{entityType.Name}Host";
+        var baseType = typeof(IBusinessService);
+        var derivedType = entityType;
+        
+        var contract = entityType.GetInterfaces().FirstOrDefault();
+        if (contract != null) derivedType = contract;
+
+        controller.ControllerName = $"{derivedType.Name.TrimStart('I')}Host";
     }
 }
