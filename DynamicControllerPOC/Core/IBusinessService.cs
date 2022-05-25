@@ -2,5 +2,5 @@
 
 public interface IBusinessService
 {
-    string Execute();//int input
+    //string Execute();//int input
 }

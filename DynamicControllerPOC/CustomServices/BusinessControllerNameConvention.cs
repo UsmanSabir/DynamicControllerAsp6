@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Runtime.Serialization.Json;
 using DynamicControllerPOC.Core;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
@@ -18,9 +19,26 @@ public class BusinessControllerNameConvention : Attribute, IControllerModelConve
         var entityType = controller.ControllerType.GenericTypeArguments[0];
         var baseType = typeof(IBusinessService);
         var derivedType = entityType;
-        
-        var contract = entityType.GetInterfaces().FirstOrDefault();
-        if (contract != null) derivedType = contract;
+
+        var interfaces = entityType.GetInterfaces();
+        var contract = interfaces.FirstOrDefault();
+        if (contract != null)
+        {
+            if (baseType.IsAssignableFrom(contract))
+                derivedType = contract;
+            else
+            {
+                for (int i = 1; i < interfaces.Length; i++)
+                {
+                    contract = interfaces[i];
+                    if (baseType.IsAssignableFrom(contract))
+                    {
+                        derivedType = contract;
+                        break;
+                    }
+                }
+            }
+        }
 
         controller.ControllerName = $"{derivedType.Name.TrimStart('I')}Host";
     }
