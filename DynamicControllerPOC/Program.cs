@@ -4,6 +4,7 @@ using DynamicControllerPOC.CustomServices;
 using DynamicControllerPOC.Services;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,7 +37,15 @@ builder.Services.RegisterBusinessServices();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+         c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+         c.DocumentFilter<MyDocumentFilter>();
+         c.SchemaFilter<CustomSchemaFilter>(); // Register the custom schema filter
+                                               // Register a custom implementation of IApiDescriptionGroupCollectionProvider
+                                               //c.ServiceCollection.AddTransient<IApiDescriptionGroupCollectionProvider, MyApiDescriptionGroupCollectionProvider>();
+         SwaggerConfig.ConfigureSwagger(c);    
+});
 
 var app = builder.Build();
 
