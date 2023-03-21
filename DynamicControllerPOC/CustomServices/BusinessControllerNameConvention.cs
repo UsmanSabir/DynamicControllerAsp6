@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Reflection;
 using System.Runtime.Serialization.Json;
 using DynamicControllerPOC.Core;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
@@ -18,9 +19,11 @@ public class BusinessControllerNameConvention : Attribute, IControllerModelConve
 
         var entityType = controller.ControllerType.GenericTypeArguments[0];
         var baseType = typeof(IBusinessService);
+        var entityTypeInfo = entityType.GetTypeInfo();
         var derivedType = entityType;
 
-        var interfaces = entityType.GetInterfaces();
+        
+        var interfaces = entityType.GetInterfaces(); //entityTypeInfo.ImplementedInterfaces
         var contract = interfaces.FirstOrDefault();
         if (contract != null)
         {
